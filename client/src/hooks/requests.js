@@ -8,7 +8,7 @@ async function httpGetPlanets() {
 async function httpGetLaunches() {
   const response = await fetch(`${API_URL}/launches`)
   const fetchedLaunches = await response.json()
-  return fetchedLaunches.sort((a,b) => {
+  return fetchedLaunches.sort((a, b) => {
     return a.flightNumber - b.flightNumber
   })
 }
@@ -30,8 +30,15 @@ async function httpSubmitLaunch(launch) {
 }
 
 async function httpAbortLaunch(id) {
-  // TODO: Once API is ready.
-  // Delete launch with given ID.
+  try {
+    return await fetch(`${API_URL}/launches/${id}`, {
+      method: 'DELETE'
+    })
+  } catch (error) {
+    return {
+      ok: false,
+    }
+  }
 }
 
 export {
